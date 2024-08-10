@@ -15,12 +15,12 @@ let initialIsAuth = false,
 // Инициализируем состояние контекста данными из local storage 
 if (ls) {
     try {
-        const { aToken, rToken } = JSON.parse(ls);
+        const { accessToken, refreshToken } = JSON.parse(ls);
 
         initialIsAuth = true;
-        initialAccessToken = aToken;
-        initialRefreshToken = rToken;
-        initialTokenExpires = JSON.parse(atob(aToken.split('.')[1])).exp * 1000;
+        initialAccessToken = accessToken;
+        initialRefreshToken = refreshToken;
+        initialTokenExpires = JSON.parse(atob(accessToken.split('.')[1])).exp * 1000;
     } catch (err) {
         console.error(err);
     }
