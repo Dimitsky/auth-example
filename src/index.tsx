@@ -16,6 +16,8 @@ import { LoginPage } from './pages/loginPage/LoginPage';
 
 // css
 import './index.css';
+import { PrivateRoute } from './HOCs/PrivateRoute';
+import { AuthProvider } from './context/authContext/AuthProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -33,7 +35,7 @@ const routes = createBrowserRouter([
 			}, 
 			{
 				path: '/me', 
-				element: <MePage />, 
+				element: <PrivateRoute><MePage /></PrivateRoute>, 
 			}, 
 			{
 				path: '/login', 
@@ -45,7 +47,9 @@ const routes = createBrowserRouter([
 
 root.render(
 	<React.StrictMode>
-		<RouterProvider router={routes} />
+		<AuthProvider>
+			<RouterProvider router={routes} />
+		</AuthProvider>
 	</React.StrictMode>
 );
 
