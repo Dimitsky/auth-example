@@ -29,7 +29,7 @@ export function LoginPage() {
         const data = await login(username, password, 1);
 
         if (data) {
-            setAuth(data.token, data.refresToken);
+            setAuth(data.token, data.refreshToken);
         }
     }
 

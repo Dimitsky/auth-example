@@ -11,7 +11,11 @@ export interface IMe {
 
 export interface ILoginResponse extends IMe {
     token: string;
-    refresToken: string;
+    refreshToken: string;
+}
+
+export interface IUser extends IMe {
+    [key: string]: string | number;
 }
 
 // Интерфейс для контекста аутентификации 
