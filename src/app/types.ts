@@ -9,6 +9,11 @@ export interface IMe {
     image: string;
 }
 
+export interface ILoginResponse extends IMe {
+    token: string;
+    refresToken: string;
+}
+
 // Интерфейс для контекста аутентификации 
 export interface IAuth {
     isAuth: boolean;

@@ -71,7 +71,7 @@ export function AuthProvider({ children }: PropsWithChildren<AuthProviderProps>)
         setAuth, 
         clearAuth, 
     ]);
-console.log(value)
+
     return (
         <AuthContext.Provider value={value}>
             {children}
