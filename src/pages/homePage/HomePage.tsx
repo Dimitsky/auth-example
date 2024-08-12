@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 // context
 import { useAuth } from "../../context/authContext/useAuth";
 
+// css
+import styles from './homePage.module.css';
+
 export function HomePage() {
     const { isAuth, clearAuth } = useAuth();
 
@@ -12,30 +15,14 @@ export function HomePage() {
     }
 
     return (
-        <div>
-            <h1>
+        <div className={styles.wrap}>
+            <h1 className={styles.title}>
                 Welcome!
             </h1>
-            <p>
-                This is the home page.
+            <p className={styles.text}>
+                This is the home page. {isAuth && (<>You have been authenticated. Go to <Link to="/me">your</Link> page to view details.</>)}
             </p>
-            <div>
-                {isAuth ? (
-                    <>
-                        <button onClick={handleOnClickLogout}>
-                            Logout
-                        </button>
-                        <p>
-                            You have been authenticated. Go to <Link to="/me">your</Link> page to view details.
-                        </p>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login">
-                            Log in
-                        </Link>
-                    </>
-                )}
+            <div className={styles.inner}>
             </div>
         </div>
     )
