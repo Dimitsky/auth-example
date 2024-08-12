@@ -1,4 +1,8 @@
-import { useAuth } from "../../context/authContext/useAuth"
+// context
+import { useAuth } from "../../context/authContext/useAuth";
+
+// css
+import styles from './logout.module.css';
 
 export function LogoutBtn() {
     const { clearAuth } = useAuth();
@@ -9,7 +13,10 @@ export function LogoutBtn() {
     }
 
     return (
-        <button onClick={handleOnClickLogout}>
+        <button 
+            className={styles.btn}
+            onClick={handleOnClickLogout}
+        >
             logout
         </button>
     )
