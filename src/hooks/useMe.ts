@@ -21,6 +21,8 @@ export function useMe(): UseMe {
     const { accessToken } = useAuth();
 
     useEffect(() => {
+        let isIgnore = false;
+
         const fetchMe = async () => {
             const options = {
                 method: 'GET', 
@@ -37,8 +39,10 @@ export function useMe(): UseMe {
                 if (response.ok) {
                     const fetchedData = await response.json();
 
-                    setData(fetchedData);
-                    setError(null);
+                    if (!isIgnore) {
+                        setData(fetchedData);
+                        setError(null);
+                    }
                 } else {
                     if (response.status === 404) {
                         throw new Error('404, not found');
@@ -66,6 +70,10 @@ export function useMe(): UseMe {
         }
 
         fetchMe();
+
+        return () => {
+            isIgnore = true;
+        }
     }, []);
 
     return {
