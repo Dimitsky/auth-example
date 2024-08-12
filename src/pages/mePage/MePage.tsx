@@ -25,10 +25,11 @@ export function MePage() {
     
     return (
         <div>
-            <h1>
-                My page
-            </h1>
             {data ? (
+                <>   
+                    <h1>
+                        My page
+                    </h1>
                     <div>
                         <div>
                             <img 
@@ -62,8 +63,9 @@ export function MePage() {
                             </h2>
                         </div>
                     </div>
+                </>
             ) : (
-                <></>
+                null
             )}
         </div>
     )

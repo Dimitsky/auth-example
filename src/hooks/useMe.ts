@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../app/types';
 import { useAuth } from '../context/authContext/useAuth';
 import { BASE_URL } from '../app/consts';
+import { useRefresh } from './useRefresh';
 
 const URL = '/auth/me';
 
@@ -19,6 +20,7 @@ export function useMe(): UseMe {
     const [ error, setError ] = useState<string | null>(null);
     const [ isPending, setIsPending ] = useState(false);
     const { accessToken } = useAuth();
+    const [ refresh ] = useRefresh();
 
     useEffect(() => {
         let isIgnore = false;
@@ -44,6 +46,15 @@ export function useMe(): UseMe {
                         setError(null);
                     }
                 } else {
+                    if (response.status === 401) {
+                        refresh()
+                        .catch(err => {
+                            throw new Error(err);
+                        });
+
+                        return
+                    }
+
                     if (response.status === 404) {
                         throw new Error('404, not found');
                     }
@@ -74,7 +85,7 @@ export function useMe(): UseMe {
         return () => {
             isIgnore = true;
         }
-    }, []);
+    }, [ accessToken ]);
 
     return {
         data, 
