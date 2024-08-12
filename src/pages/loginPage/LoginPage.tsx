@@ -98,19 +98,19 @@ export function LoginPage() {
             </h1>
             {isAuth ? (
                 <p>
-                    Вы уже вошли в систему. Перейдите на <Link to="/me">личную</Link> страницу или <Link to="/">домашнюю</Link>. 
+                    You are already logged in. Go to your <Link to="/me">personal</Link> or <Link to="/">home</Link> page.
                 </p>
             ) : (
                 <div>
                     <div>
-                        <p>
-                            Используйте эти данные для входа. Полный список пользователей можно найти на <Link to="https://dummyjson.com/users">https://dummyjson.com/users</Link>
+                        <p>                    
+                            Use these details to login. A complete list of users can be found at <Link to="https://dummyjson.com/users">https://dummyjson.com/users</Link>
                         </p>
                         <h4>
-                            Имя пользователя: <span>emilys</span>
+                            Username: <span>emilys</span>
                         </h4>
                         <h4>
-                            Пароль: <span>emilyspass</span>
+                            Password: <span>emilyspass</span>
                         </h4>
                     </div>
                     <form 

@@ -37,7 +37,9 @@ export function PrivateRoute({ children }: PropsWithChildren<PrivateRouteProps>)
                     {children}
                 </>
             ) : (
-                <p>Вы не авторизованы. Перейдите на страницу <Link to='/login'>входа</Link> и пройдите аутентификацию.</p>
+                <p>
+                    You are not authorized. Go to the <Link to='/login'>login</Link> page and authenticate.
+                </p>
             )}
         </>
     )
