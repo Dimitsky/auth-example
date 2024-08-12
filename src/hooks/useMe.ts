@@ -19,7 +19,7 @@ export function useMe(): UseMe {
     const [ data, setData ] = useState<IUser | null>(null);
     const [ error, setError ] = useState<string | null>(null);
     const [ isPending, setIsPending ] = useState(false);
-    const { accessToken } = useAuth();
+    const { accessToken, tokenExpires } = useAuth();
     const [ refresh ] = useRefresh();
 
     useEffect(() => {
@@ -36,6 +36,12 @@ export function useMe(): UseMe {
             setIsPending(true);
 
             try {
+                if (Date.now() >= tokenExpires) {
+                    refresh();
+    
+                    return
+                }
+                
                 const response = await fetch(BASE_URL + URL, options);
 
                 if (response.ok) {
@@ -46,15 +52,6 @@ export function useMe(): UseMe {
                         setError(null);
                     }
                 } else {
-                    if (response.status === 401) {
-                        refresh()
-                        .catch(err => {
-                            throw new Error(err);
-                        });
-
-                        return
-                    }
-
                     if (response.status === 404) {
                         throw new Error('404, not found');
                     }
