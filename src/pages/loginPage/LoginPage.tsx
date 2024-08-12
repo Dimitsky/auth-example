@@ -10,6 +10,8 @@ export function LoginPage() {
     const [ usernameError, setUsernameError ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ passwordError, setPasswordError ] = useState('');
+    const [ tokenExpiresInMins, setTokenExpiresInMins ] = useState(1);
+    const [ tokenExpiresInMinsError, SetTokenExpiresInMinsError ] = useState('');
     const [ login, { error: loginError, isPending: isLoginPending } ] = useLogin();
     const { setAuth, isAuth } = useAuth();
 
@@ -22,11 +24,48 @@ export function LoginPage() {
     const handleOnChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     }
+    // Управляет полем срока годности токена 
+    const handleOnChangetokenExpiresInMins = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTokenExpiresInMins(+e.target.value);
+    }
+    // Управляет сбросом формы
+    const handleOnCLickReset = () => {
+        setUsername('');
+        setPassword('');
+        setTokenExpiresInMins(1);
+    }
     // Управляет отправкой формы
     const handleOnSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data = await login(username, password, 1);
+        // Сбрасываем ошибки 
+        setUsernameError('');
+        setPasswordError('');
+        SetTokenExpiresInMinsError('');
+
+        // Очень простая валидация формы
+        // Если не введен никнейм
+        if (username === '') {
+            setUsernameError('Enter your username');
+
+            return;
+        }
+
+        // Если не введен пароль
+        if (password === '') {
+            setPasswordError('Enter your password');
+
+            return;
+        }
+
+        // Если число меньше 1 и больше 60
+        if (tokenExpiresInMins < 1 || tokenExpiresInMins > 60) {
+            SetTokenExpiresInMinsError('The number must be from 1 to 60');
+
+            return;
+        }
+
+        const data = await login(username, password, tokenExpiresInMins);
 
         if (data) {
             setAuth(data.token, data.refreshToken);
@@ -74,7 +113,10 @@ export function LoginPage() {
                             Пароль: <span>emilyspass</span>
                         </h4>
                     </div>
-                    <form onSubmit={handleOnSubmitForm}>
+                    <form 
+                        noValidate
+                        onSubmit={handleOnSubmitForm}
+                    >
                         <div>
                             <label>Username</label>
                             <input 
@@ -98,6 +140,26 @@ export function LoginPage() {
                             <span>{passwordError}</span>
                         </div>
                         <div>
+                            <label>Token expires in mins</label>
+                            <input 
+                                type="number"
+                                id="token-expires"
+                                name="token-expires"
+                                min={1}
+                                max={60}
+                                value={tokenExpiresInMins}
+                                onChange={handleOnChangetokenExpiresInMins}
+                            />
+                            <span>{tokenExpiresInMinsError}</span>
+                        </div>
+                        <div>
+                            <input 
+                                type="reset"
+                                id="Reset"
+                                name="Reset"
+                                value="Reset form"
+                                onClick={handleOnCLickReset}
+                            />
                             <input 
                                 type="submit"
                                 id="submit"
