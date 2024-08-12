@@ -1,31 +1,48 @@
+// react router
 import { Link, useLocation } from "react-router-dom";
+
+// context
 import { useAuth } from "../../context/authContext/useAuth";
+
+// comps
 import { LogoutBtn } from "../logoutBtn/LogoutBtn";
+
+// css
+import styles from './navigation.module.css';
 
 export function Navigation() {
     const location = useLocation();
     const { isAuth } = useAuth();
     
     return (
-        <div>
-            <ul>
-                <li>
-                    <Link to="/">
+        <div className={styles.wrap}>
+            <ul className={styles.list}>
+                <li className={styles.item}>
+                    <Link 
+                        className={location.pathname === '/' ? styles.link + ' ' + styles.active : styles.link} 
+                        to="/"
+                    >
                         home
                     </Link>
                 </li>
-                <li>
-                    <Link to="/me">
+                <li className={styles.item}>
+                    <Link 
+                        className={location.pathname === '/me' ? styles.link + ' ' + styles.active : styles.link} 
+                        to="/me"
+                    >
                         user
                     </Link>
                 </li>
-                <li>
-                    <Link to="/login">
+                <li className={styles.item}>
+                    <Link 
+                        className={location.pathname === '/login' ? styles.link + ' ' + styles.active : styles.link} 
+                        to="/login"
+                    >
                         login
                     </Link>
                 </li>
                 {isAuth && (
-                    <li>
+                    <li className={styles.item}>
                         <LogoutBtn />
                     </li>
                 )}
