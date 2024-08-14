@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // react router
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -22,7 +22,7 @@ import { AuthProvider } from './context/authContext/AuthProvider';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const routes = createBrowserRouter([
+const routes = createHashRouter([
 	{
 		path: '/', 
 		element: <LayoutPage />, 
