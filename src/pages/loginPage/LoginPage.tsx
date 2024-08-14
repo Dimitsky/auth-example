@@ -1,16 +1,26 @@
 // react
 import { useState } from "react"
+
+// react router
+import { Link } from "react-router-dom";
+
+// hooks
 import { useLogin } from "../../hooks/useLogin";
 import { useAuth } from "../../context/authContext/useAuth";
+
+// comps
 import { Loader } from "../../comps/loader/Loader";
-import { Link } from "react-router-dom";
+
+// css
+import styles from './login.module.css';
+import { UserInfoExample } from "../../comps/userInfoExample/UserInfoExample";
 
 export function LoginPage() {
     const [ username, setUsername ] = useState('');
     const [ usernameError, setUsernameError ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ passwordError, setPasswordError ] = useState('');
-    const [ tokenExpiresInMins, setTokenExpiresInMins ] = useState(1);
+    const [ tokenExpiresInMins, setTokenExpiresInMins ] = useState('');
     const [ tokenExpiresInMinsError, SetTokenExpiresInMinsError ] = useState('');
     const [ login, { error: loginError, isPending: isLoginPending } ] = useLogin();
     const { setAuth, isAuth } = useAuth();
@@ -26,16 +36,17 @@ export function LoginPage() {
     }
     // Управляет полем срока годности токена 
     const handleOnChangetokenExpiresInMins = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTokenExpiresInMins(+e.target.value);
+        setTokenExpiresInMins(e.target.value);
     }
     // Управляет сбросом формы
     const handleOnCLickReset = () => {
         setUsername('');
         setPassword('');
-        setTokenExpiresInMins(1);
+        setTokenExpiresInMins('');
     }
     // Управляет отправкой формы
     const handleOnSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        let validationFailded = false;
         e.preventDefault();
 
         // Сбрасываем ошибки 
@@ -48,27 +59,32 @@ export function LoginPage() {
         if (username === '') {
             setUsernameError('Enter your username');
 
-            return;
+            validationFailded = true;
         }
 
         // Если не введен пароль
         if (password === '') {
             setPasswordError('Enter your password');
 
-            return;
+            validationFailded = true;
         }
 
         // Если число меньше 1 и больше 60
-        if (tokenExpiresInMins < 1 || tokenExpiresInMins > 60) {
+        if (+tokenExpiresInMins < 1 || +tokenExpiresInMins > 60) {
             SetTokenExpiresInMinsError('The number must be from 1 to 60');
 
-            return;
+            validationFailded = true;
         }
 
-        const data = await login(username, password, tokenExpiresInMins);
+        if (validationFailded) {
+            return
+        }
+
+        const data = await login(username, password, +tokenExpiresInMins);
 
         if (data) {
             setAuth(data.token, data.refreshToken);
+            handleOnCLickReset();
         }
     }
 
@@ -92,68 +108,63 @@ export function LoginPage() {
     }
 
     return(
-        <div>
-            <h1>
+        <div className={styles.wrap}>
+            <h1 className={styles.title}>
                 Login
             </h1>
             {isAuth ? (
-                <p>
+                <p className={styles.text}>
                     You are already logged in. Go to your <Link to="/me">personal</Link> or <Link to="/">home</Link> page.
                 </p>
             ) : (
-                <div>
-                    <div>
-                        <p>                    
-                            Use these details to login. A complete list of users can be found at <Link to="https://dummyjson.com/users">https://dummyjson.com/users</Link>
-                        </p>
-                        <h4>
-                            Username: <span>emilys</span>
-                        </h4>
-                        <h4>
-                            Password: <span>emilyspass</span>
-                        </h4>
-                    </div>
+                <div className={styles.inner}>
+                    <UserInfoExample />
                     <form 
+                        className={styles.form}
                         noValidate
                         onSubmit={handleOnSubmitForm}
                     >
-                        <div>
-                            <label>Username</label>
+                        <div className={styles.group}>
                             <input 
+                                className={styles.textField}
                                 type="text"
                                 id="username"
                                 name="username"
+                                placeholder="username"
                                 value={username}
                                 onChange={handleOnChangeUsername}
                             />
-                            <span>{usernameError}</span>
+                            {usernameError && <span className={styles.error}>{usernameError}</span>}
                         </div>
-                        <div>
-                            <label>Password</label>
+                        <div className={styles.group}>
                             <input 
+                                className={styles.textField}
                                 type="password"
                                 id="password"
                                 name="password"
+                                placeholder="password"
                                 value={password}
                                 onChange={handleOnChangePassword}
                             />
-                            <span>{passwordError}</span>
+                            {passwordError && <span className={styles.error}>{passwordError}</span>}
                         </div>
-                        <div>
-                            <label>Token expires in mins</label>
+                        <div className={styles.group}>
                             <input 
+                                className={styles.textField}
                                 type="number"
                                 id="token-expires"
                                 name="token-expires"
                                 min={1}
                                 max={60}
+                                placeholder="Token expires in mins"
                                 value={tokenExpiresInMins}
                                 onChange={handleOnChangetokenExpiresInMins}
                             />
-                            <span>{tokenExpiresInMinsError}</span>
+                            {tokenExpiresInMinsError && <span className={styles.error}>{tokenExpiresInMinsError}</span>}
                         </div>
-                        <div>
+                        <div className={styles.group + ' ' + styles.groupBtn}>
                             <input 
+                                className={styles.btn + ' ' + styles.btnReset}
                                 type="reset"
                                 id="Reset"
                                 name="Reset"
@@ -161,6 +172,7 @@ export function LoginPage() {
                                 onClick={handleOnCLickReset}
                             />
                             <input 
+                                className={styles.btn}
                                 type="submit"
                                 id="submit"
                                 name="submit"

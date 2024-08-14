@@ -5,9 +5,12 @@ import { Outlet } from 'react-router-dom';
 import { Navigation } from '../../comps/navigation/Navigation';
 import { TokenExpires } from '../../comps/tokenExpires/TokenExpires';
 
+// css
+import styles from './layout.module.css';
+
 export function LayoutPage() {
     return (
-        <div>
+        <div className={styles.container}>
             <Navigation />
             <TokenExpires />
             <Outlet />

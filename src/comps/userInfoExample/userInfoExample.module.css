@@ -1,0 +1,18 @@
+.wrap {
+    border-radius: 10px;
+    padding: 1em;
+    background: #eee;
+}
+
+.text {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.title {
+    line-height: 1.5;
+}
+
+.value {
+    font-weight: 400;
+}
