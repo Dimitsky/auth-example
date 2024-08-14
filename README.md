@@ -16,6 +16,10 @@
 * React 
 * React Router
 
+## Известные проблемы
+* После обновления токена, сервер всегда устанавливает дату следующего обновления через 1 час, независимо от того, сколько минут мы указываем при запросе обновления
+* Во время обновления токена, не выводится лоадер  (пока не знаю, как лучше это исправить)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
