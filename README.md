@@ -1,6 +1,6 @@
 # Пример простой авторизации с помощью токена. 
 
-Живая версия приложения на GitHub pages: (auth-example)[https://dimitsky.github.io/auth-example/]
+Живая версия приложения на GitHub pages: [auth-example](https://dimitsky.github.io/auth-example/)
 
 После входа клиент получает два токена - access token и refresh token. Первый используется для авторизации, второй для обновления первого. 
 
@@ -8,7 +8,7 @@
 
 Есть простая валидация формы входа.  
 
-Аутентификация/авторизация работает через JSON сервер (DummyJSON)[https://dummyjson.com/]. 
+Аутентификация/авторизация работает через JSON сервер [DummyJSON](https://dummyjson.com/). 
 
 ## Приложение написано с помощью 
 
