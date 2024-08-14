@@ -1,3 +1,15 @@
+# Пример простой авторизации с помощью токена. 
+
+После входа клиент получает два токена - access token и refresh token. Первый используется для авторизации, второй для обновления первого. 
+
+Токен обновляется с помощью перехватчика запроса. Проверяется, когда заканчивается access token и при необходимости он обновляется. 
+
+## Написано с помощью 
+
+* TypeScript
+* React 
+* React Router
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
