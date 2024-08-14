@@ -30,9 +30,9 @@ export function MePage() {
     }
     
     return (
-        <div className={styles.wrap}>
+        <>
             {data ? (
-                <>   
+                <div className={styles.wrap}>   
                     <h1 className={styles.title}>
                         My page
                     </h1>
@@ -70,10 +70,10 @@ export function MePage() {
                             </h2>
                         </div>
                     </div>
-                </>
+                </div>
             ) : (
                 null
             )}
-        </div>
+        </>
     )
 }
