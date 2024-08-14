@@ -7,7 +7,10 @@ import { Link } from "react-router-dom";
 // context
 import { useAuth } from "../context/authContext/useAuth";
 
-// типа для PrivateRoute
+// css
+import styles from './privateRoute.module.css';
+
+// тип для PrivateRoute
 type PrivateRouteProps = {}
 
 export function PrivateRoute({ children }: PropsWithChildren<PrivateRouteProps>) {
@@ -20,7 +23,7 @@ export function PrivateRoute({ children }: PropsWithChildren<PrivateRouteProps>)
                     {children}
                 </>
             ) : (
-                <p>
+                <p className={styles.text}>
                     You are not authorized. Go to the <Link to='/login'>login</Link> page and authenticate.
                 </p>
             )}
